@@ -88,7 +88,7 @@ tf.app.flags.DEFINE_float('min_lr', 0.005, 'for gradient decent learning rate')
 
 tf.app.flags.DEFINE_float('max_abstract_len', 500, 'Discards articles with longer abstracts')
 tf.app.flags.DEFINE_float('min_abstract_len', 50, 'Discards articles with short abstracts')
-tf.app.flags.DEFINE_float('max_article_sents', 350, 'Discards articles with short abstracts')
+tf.app.flags.DEFINE_float('max_article_sents', 350, 'Discards articles with longer articles')
 
 tf.app.flags.DEFINE_boolean('use_sections', False, 'use hierarchical encoding/decoding over sections')
 tf.app.flags.DEFINE_integer('max_section_len', 400, 'Truncate sections')
