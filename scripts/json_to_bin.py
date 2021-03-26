@@ -17,6 +17,8 @@ import numbers
 import re
 from itertools import chain
 import pathlib
+import nltk
+from pprint import pprint
 
 VOCAB_SIZE=50000
 
@@ -112,13 +114,17 @@ def write_to_bin(infile, outfile, vocab_file=False):
 
     # Write the vocab to file, if applicable
     if vocab_file:
-      art_tokens = article_body_str.split(' ')
+      art_tokens = nltk.wordpunct_tokenize(article_body_str.replace(SENTENCE_START, '')
+                                                           .replace(SENTENCE_END, '')
+                                                           .replace(LIST_SEPARATOR.strip(), ''))
       art_tokens = [t for t in art_tokens
                     if t not in [
                       SENTENCE_START, SENTENCE_END, SENTENCE_SEPARATOR,
                       SECTION_SEPARATOR.strip(),
                       LIST_SEPARATOR.strip()]]
-      abs_tokens = abstract_str.split(' ')
+      abs_tokens = nltk.wordpunct_tokenize(abstract_str.replace(SENTENCE_START, '')
+                                                       .replace(SENTENCE_END, '')
+                                                       .replace(LIST_SEPARATOR.strip(), ''))
       # remove these tags from vocab
       abs_tokens = [t for t in abs_tokens if t not in [
         SENTENCE_START, SENTENCE_END, SENTENCE_SEPARATOR,
@@ -132,7 +138,8 @@ def write_to_bin(infile, outfile, vocab_file=False):
 
   print("Finished writing file %s\n" % outfile)
   writer.close()
-
+  pprint(vocab_counter.most_common(VOCAB_SIZE)[-10:])
+  pprint(vocab_counter.most_common(VOCAB_SIZE)[:50])
   # write vocab to file
   if vocab_file:
     print("Writing vocab file...")
