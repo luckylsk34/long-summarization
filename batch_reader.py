@@ -430,7 +430,7 @@ class Batch(object):
             while(j < len(ex.enc_sections)):
               self.batch_sections[i, j, :] = ex.enc_sections[j][:self._hps.max_section_len]
               if j < len(ex.enc_sec_len):
-                for k in range(ex.enc_sec_len[j]):
+                for k in range(min(ex.enc_sec_len[j], self._hps.max_section_len)):
                   self.enc_section_padding_mask[i][j][k] = 1
               j += 1
             self.batch_sections_len[i, :] = ex.num_words_section[:]
