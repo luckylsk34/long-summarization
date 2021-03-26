@@ -4,18 +4,18 @@ export PYTHONWARNINGS="ignore::DeprecationWarning"
 
 python run_summarization.py \
 --mode=train \
---data_path=./data/train.bin \
---vocab_path=./data/vocab \
+--data_path=./data/$1 \
+--vocab_path=./data/$2 \
 --log_root=logroot \
---exp_name=train-experiment \
+--exp_name=$3 \
 --min_dec_steps=15 \
---max_dec_steps=210 \
---max_enc_steps=2500 \
+--max_dec_steps=80 \
+--max_enc_steps=400 \
 --num_sections=20 \
---max_section_len=500 \
+--max_section_len=50 \
 --min_section_len=1 \
 --min_abstract_len=1 \
---batch_size=4 \
+--batch_size=1 \
 --vocab_size=50000 \
 --use_do=True \
 --optimizer=adagrad \
