@@ -27,6 +27,7 @@ import time
 import numpy as np
 import tensorflow as tf
 import data
+import nltk
 
 # To represent list of sections as string and retrieve it back
 SECTION_SEPARATOR = ' <SCTN/> '
@@ -61,7 +62,7 @@ def _string_to_nested_list(s):
 def _section_to_ids(section, vocab, max_len, pad_id):
   """ Converts words in a section (list of strings) to ids and pad if necessary """
   section_text = ' '.join(section)
-  section_words = section_text.split()
+  section_words = nltk.wordpunct_tokenize(section_text)
   sec_len = len(section_words)
   if sec_len > max_len:
     section_words = section_words[:max_len]
@@ -74,7 +75,7 @@ def _flatten(lst):
 
 def _get_section_words(sec, max_len=None, pad_id=data.PAD_TOKEN, pad=True):
   """ given a section (list of sentences), returns a single list of words in that section """
-  words = ' '.join(sec).split()
+  words = nltk.wordpunct_tokenize(' '.join(sec))
   if max_len is None:
     max_len = len(words)
   if pad:
@@ -218,7 +219,7 @@ class Example(object):
 
         article_text = ' '.join(article)
         # Process the article
-        article_words = article_text.split()
+        article_words = nltk.wordpunct_tokenize(article_text)
         if len(article_words) > hps.max_enc_steps:
             article_words = article_words[:hps.max_enc_steps]
         # store the length after truncation but before padding
@@ -236,7 +237,7 @@ class Example(object):
 
         # Process the abstract
         abstract = ' '.join(abstract_sentences)  # string
-        abstract_words = abstract.split()  # list of strings
+        abstract_words = nltk.wordpunct_tokenize(abstract)  # list of strings
         # list of word ids; OOVs are represented by the id for UNK token
         abs_ids = [vocab.word2id(w) for w in abstract_words]
 
