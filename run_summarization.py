@@ -332,6 +332,8 @@ def run_training(model, batcher, sess_context_manager, sv, summary_writer):
             if train_step % 100 == 0:  # flush the summary writer every so often
                 summary_writer.flush()
 
+            tf.logging.info('training step ' + str(train_step) + ' completed')
+
 def run_eval(model, batcher, vocab, hier=False):
   """Repeatedly runs eval iterations, logging to screen and writing summaries. Saves the model with the best loss seen so far."""
   model.build_graph() # build the graph
